@@ -1,0 +1,304 @@
+1.SHOW DATABASES; (to display all databases)
+
+2.CREATE DATABASE database_name;
+
+3.I have to find out rename database [sol1: INSERT INTO new_database_name.table_name SELECT * FROM current_database_name.table_name;]
+
+4.DROP DATABASE database_name;
+
+5.CREATE TABLE table_name
+    (
+    Roll int,
+    Name varchar(15),
+    Gender varchar(10),
+    Age int(5),
+    GPA double(3,2),
+    City varchar(20),
+    PRIMARY KEY(Roll)
+    );
+
+6.RENAME TABLE old table_name to new table_name;
+
+7.DROP TABLE table_name;
+
+8.INSERT INTO table_name
+   VALUES
+   (VALUES of COLUMNS),
+   (....................),
+   (....................);
+
+9.SELECT column_name FROM table_name; --> to see specific columns
+
+10.SELECT* FROM table_name; --> to see all columns
+
+11.SELECT DISTINCT column_name from table_name; --> remove doplicate values
+
+12.SELECT* FROM table_name LIMIT 5; --> add limitation(suppose a table has 20 rows but in this case it display only 5 rows)
+
+13.SELECT* FROM table_name LIMIT 2,5; --> here first 2 rows won't display and next 5 rows will display.
+
+14.SELECT column_name from table_name ORDER BY column_name; --> assending order
+
+15.SELECT column_name FROM table_name ORDER BY column_name desc; dessending order
+
+16. where condition:
+                   a. SELECT city  FROM `student_details` WHERE Gender = 'male';
+                   b. SELECT DISTINCT city  FROM `student_details` WHERE Gender = 'male';
+                   c. SELECT city  FROM `student_details` WHERE Gender = 'male' ORDER BY city; 
+                   d. SELECT DISTINCT city  FROM `student_details` WHERE Gender = 'male' ORDER BY city;
+                   e. SELECT* FROM `student_details` WHERE Age < 17;
+
+
+17. Relational Operators: (=, !=, >, >=, <, <=, BETWEEN)
+
+a. SELECT Roll,Name,GPA
+   FROM student_details
+   WHERE Roll BETWEEN 102 AND 105; 
+
+b. SELECT Roll,Name,GPA
+   FROM student_details
+   WHERE Roll=102;
+ 
+c. SELECT Roll,Name,GPA
+   FROM student_details
+   WHERE Roll!=102; 
+
+
+18. Logical operators: (AND, OR, IN, NOT, LIKE)
+
+a. SELECT*
+   FROM student_details
+   WHERE Gender = "Male" OR City = "Dhaka"
+
+b. SELECT*
+   FROM student_details
+   WHERE Gender = "Male" AND City = "Dhaka"
+
+c. SELECT* FROM student_details 
+   WHERE City = "Barisal" AND (Gender="Male" OR GPA>=3.50);
+
+d. SELECT* FROM student_details
+   WHERE City IN ("Sylhet", "Dhaka", "Barisal");    NOTE: 'IN' use instead of many 'OR' 
+
+e. SELECT* FROM student_details
+   WHERE City NOT IN ("Sylhet", "Dhaka", "Barisal");    NOTE: IN use instead of many OR
+
+f. SELECT* FROM `student_details` WHERE Name LIKE "S%"; --> Start with S
+
+g. SELECT* FROM `student_details` WHERE Name LIKE "%a"; --> End with a
+
+h. SELECT* FROM `student_details` WHERE Name LIKE "%hi%"; --> which names contain hi 
+
+i. SELECT* FROM `student_details` WHERE Name LIKE "_u%"; --> second character u
+
+j. SELECT* FROM `student_details` WHERE Name LIKE "%n_"; --> second last character n
+
+
+19.Custom keywords:
+   SELECT Roll AS ID, Name AS "First name"
+   FROM student_details;
+
+20.Constraints:
+a. 
+CREATE TABLE teacher
+(
+    ID int NOT NULL AUTO_INCREMENT,
+    Name varchar(15) NOT NULL,
+    Salary double(10,2),
+    PRIMARY KEY(ID)
+);
+
+b. DESCRIBE table_name; ---> to see the details of table
+
+21. Delete column: 
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+22. Add column:
+ALTER TABLE table_name
+ADD column_name varchar(255)/ int()/ double();
+
+*. Rename column:
+ALTER TABLE table_name
+CHANGE old_column new_column datatype(size);
+
+23. Delete row: 
+Single row: DELETE FROM table_name WHERE ID=101
+
+*Multiple row: 
+DELETE FROM table_name
+WHERE ID IN (101, 103);
+
+24.Updates rocords:
+UPDATE teacher
+SET Salary=25 WHERE ID=1001
+
+25.
+UPDATE teacher
+SET Salary = Salary+5
+WHERE Salary >= 25;
+
+*Update multiple values of a Column:
+a.
+UPDATE teacher
+SET ID = 
+    CASE
+    	  WHEN ID = 1000 THEN 101
+    	  WHEN ID = 1001 THEN 102
+    	  WHEN ID = 1003 THEN 103
+          WHEN ID = 1009 THEN 104
+          WHEN ID = 1008 THEN 105
+          WHEN ID = 1007 THEN 106
+          WHEN ID = 1006 THEN 107
+    END
+WHERE ID IN (1000,1001,1003,1009,1008,1007,1006);
+b.
+UPDATE teacher
+SET Salary = 
+    CASE
+    	  WHEN Salary = 30 THEN 30000
+          WHEN Salary = 31 THEN 31000
+    END
+WHERE Salary IN (30,31);    
+
+26. upper and lower function:
+a. SELECT UPPER("This is zahid");
+b. SELECT LOWER("This is zahid");
+c. SELECT UPPER(City)
+   FROM student_details;
+
+27. Functions:
+a. SELECT CONCAT('Welcome to', 'mysql database');
+b. SELECT CONCAT(Name,' is ',Age,' years old.')
+   FROM student_details;
+c. SELECT CONCAT(Name,' is ',Age,' years old.') AS Student
+   FROM student_details;
+d. SELECT GREATEST(23,45,4,54);
+e. SELECT LEAST(23,45,4,54);
+f. SELECT POW(2,3);
+g. SELECT LOG(2);
+h. SELECT LOG10(2);
+i. SELECT TRUNCATE(10.8728367823,2) --->THIS WILL DISPLAY 2 DIGIT AFTER DOT
+J. SELECT TRUNCATE(LOG(2),2);
+K. SELECT RAND();
+L. SELECT EXP(3); --> IT WILL DIPLAY e^3
+
+28. Aggregate Functions:
+a. SELECT COUNT(*)
+   FROM TABLE_NAME;
+b. SELECT MIN(COLUMN_NAME)
+   FROM TABLE_NAME;
+c. SELECT MAX(COLUMN_NAME)
+   FROM TABLE_NAME;
+d. SELECT SUM(COLUMN_NAME)
+   FROM TABLE_NAME;
+e. SELECT AVG(COLUMN_NAME)
+   FROM TABLE_NAME;
+f. SELECT COUNT(*), MIN(COLUMN_NAME),MAX(COLUMN_NAME),SUM(COLUMN_NAME),AVG(COLUMN_NAME)
+   FROM TABLE_NAME;
+g. SELECT MIN(GPA)
+   FROM student_details
+   WHERE Gender='Female';
+h. SELECT Roll,Name, Age, MIN(GPA)
+   FROM student_details
+   WHERE Gender="Female";  
+
+29. Sub query: 
+  
+Normal:
+a. SELECT AVG(Salary)
+   FROM teacher
+b. SELECT* FROM teacher
+   WHERE Salary > 33062.5000
+Sub: SELECT* FROM teacher
+     WHERE Salary > (SELECT AVG(Salary) FROM teacher);
+
+30. Group by Clause: [We can devide rows from a table into smaller groups by using the Group by Clause]
+*. SELECT column_name, group_function(column_name)
+   FROM table_name
+ 1.WHERE condition
+ 2.GROUP BY group_by_expression
+ 3.ORDER BY column
+
+a.
+SELECT Dept,SUM(Salary)
+FROM teacher
+GROUP BY Dept
+
+b.
+SELECT Dept,SUM(Salary)
+FROM teacher
+GROUP BY Dept
+ORDER BY SUM(Salary) DESC;
+  
+31. Truncate Table:
+a. TRUNCATE TABLE table-name; [Note: This command only delete the values of a table not entire table ]
+
+32. Joining Tables:
+a. SELECT stdent_info.Roll,Reg_Number,Name,Gender,Group_name,GPA
+FROM stdent_info,exam_result
+WHERE stdent_info.Roll = exam_result.Roll;
+
+b. SELECT si.Roll,er.Reg_Number,si.Name,si.Gender,er.Group_name,er.GPA
+FROM stdent_info AS si,exam_result AS er
+WHERE si.Roll = er.Roll; [Note: Here we use custome keword to minimize our codes]
+
+33.Join Clauses:
+SELECT stdent_info.Roll,Reg_Number,Name,Gender,Group_name,GPA
+FROM stdent_info JOIN exam_result
+ON stdent_info.Roll = exam_result.Roll;
+
+34.Inner Join: [Note: Inner Join retern those recordes which records match with both tables]
+SELECT stdent_info.Roll,Reg_Number,Name,Gender,Group_name,GPA
+FROM stdent_info INNER JOIN exam_result
+ON stdent_info.Roll = exam_result.Roll;
+
+35.Left Join:
+SELECT stdent_info.Roll,Reg_Number,Name,Gender,Group_name,GPA
+FROM stdent_info LEFT JOIN exam_result
+ON stdent_info.Roll = exam_result.Roll;
+
+36.Right Join:
+SELECT stdent_info.Roll,Reg_Number,Name,Gender,Group_name,GPA
+FROM stdent_info RIGHT JOIN exam_result
+ON stdent_info.Roll = exam_result.Roll;
+
+37. Union & Union All: [Note: Union remove duplicate values but Union All dosen't remove duplicate values.]
+
+a. SELECT Roll,Name,Gender,Age
+FROM sylhet_tour
+UNION
+SELECT Roll,Name,Gender,Age
+FROM dhaka_tour;
+
+b. SELECT Roll,Name,Gender,Age
+FROM sylhet_tour
+UNION ALL
+SELECT Roll,Name,Gender,Age
+FROM dhaka_tour;
+
+38. VIEW:
+a.CREATE VIEW view_name AS
+  SELECT column_name(s)
+  FROM table_name
+  WHERE condition;
+
+Note: update, delete, drop in VIEW same as Table
+
+39. Date & Time Part-1:
+a. SELECT CURRENT_DATE; / SELECT CURDATE(); -->Show date
+b. SELECT CURRENT_TIME; / SELECT CURTIME(); -->Show time
+c. SELECT NOW(); --> Show both date and time
+d. SELECT ADDDATE('2023-05-15', INTERVAL 5 DAY); --> Ans is 2023-05-20
+e. SELECT ADDDATE('2013-05-15', INTERVAL 3 MONTH); --> Ans is 2013-08-15
+f. SELECT SUBDATE('2023-05-15', INTERVAL 5 DAY); --> Ans is 2023-05-10
+g. SELECT SUBDATE('2013-05-15', INTERVAL 3 MONTH); --> Ans is 2013-03-15
+h. SELECT makedate(2017,186); --> Ans is 2017-07-05
+
+40. Date & Time Part-2:
+a. SELECT dayname('2023-05-28'); --> Ans is Sunday
+b. SELECT MONTHNAME('2023-05-28'); --> Ans is May
+c. SELECT dayname(column_name)
+   FROM table_name;
+d. SELECT DoB, dayname(DoB)
+   FROM student_info;
